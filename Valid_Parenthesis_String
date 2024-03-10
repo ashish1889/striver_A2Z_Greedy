@@ -1,0 +1,20 @@
+//Question: https://leetcode.com/problems/valid-parenthesis-string/description/
+
+class Solution {
+public:
+    bool checkValidString(string s) {
+        int unmatchedLeft = 0;  // unmatched left parenthesis, since scan from left to right, only check at the end of loop.
+        int maxRightNeeded = 0; // maximal right parenthesis needed, need to check while scanning from left to right.
+        for (char c : s) {
+            if (c == '(')
+                unmatchedLeft++, maxRightNeeded++;
+            if (c == ')')
+                maxRightNeeded--, unmatchedLeft = max(unmatchedLeft - 1, 0); 
+            if (c == '*')
+                maxRightNeeded++, unmatchedLeft = max(unmatchedLeft - 1, 0);
+            if (maxRightNeeded < 0) //found extra right parenthesis
+                return false;
+        }
+        return unmatchedLeft == 0;
+    }
+};
