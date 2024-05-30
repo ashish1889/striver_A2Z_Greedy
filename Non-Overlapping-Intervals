@@ -1,0 +1,49 @@
+// https://leetcode.com/problems/non-overlapping-intervals/description/
+/*
+Intuition
+
+The intuition here is that we have to remove the interval which is bigger because it will cover more space and has more chance of overlapping.
+
+Approach
+
+First of all, we have to sort the array so that we have our starting point of intervals in order, so that we can check if the nearby intervals overlap or not.
+
+So we basically keep track of the end of the last interval that we have considered to keep and then check if the new interval does or doesn't overlap 
+with the last interval which we have. If the new interval doesn't overlap then we just update the end value. If the new interval overlaps then we remove
+the interval which ends later, between the last one which we considered and the new one. Hence we update the end point accordingly. 
+We keep doing this for all the intervals and increase the answer everytime we enconter an overlap, because we have to remove an interval here.
+
+Complexity
+
+Time complexity:
+O(NlogN)
+
+Space complexity:
+O(1)
+*/
+
+//Code:
+
+class Solution {
+public:
+    int eraseOverlapIntervals(vector<vector<int>>& intervals) {
+        //[[1,2],[2,3],[3,4],[1,3]]
+        // [[1,2],[1,3],[2,3],[3,4]]
+        //end = 2
+
+        int ans=0,end=-1e5;
+        sort(intervals.begin(),intervals.end());
+
+        for(auto &child: intervals)
+        if(end>child[0])
+        {
+            ans++;
+            end=min(end,child[1]);
+        }
+        else
+        end=child[1];
+
+        return ans;
+        
+    }
+};
