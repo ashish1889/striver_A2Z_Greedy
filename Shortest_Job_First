@@ -1,0 +1,24 @@
+// Question: https://www.geeksforgeeks.org/problems/shortest-job-first/1?utm_source=youtube&utm_medium=collab_striver_ytdescription&utm_campaign=shortest-job-first
+
+class Solution {
+    //[1,2,3,4,7] -[0+1+3+6+10]
+  public:
+    long long solve(vector<int>& bt) {
+        // code here
+        sort(bt.begin(),bt.end());
+        long long waitingTime = 0;
+        long long sum = 0;
+        for(int i = 0;i<bt.size()-1;i++)
+        sum += bt[i];
+        
+        for(int i = bt.size()-2;i>=0;i--)
+        {
+          waitingTime += sum;
+          sum -= bt[i];
+        }
+        
+        long long ans = (waitingTime/bt.size());
+        return ans;
+        
+    }
+};
